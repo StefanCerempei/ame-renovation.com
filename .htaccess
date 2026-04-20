@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Redirecționare index.html -> /
+RewriteCond %{THE_REQUEST} \s/index\.html\s [NC]
+RewriteRule ^ / [R=301,L]
+
+# Redirecționare .html -> fără extensie pentru ro, en, ru
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^/(ro|en|ru)$
+RewriteRule ^([^/]+)$ /$1.html [L]
+
+# Redirecționare inversă: dacă cineva accesează .html, redirecționează
+RewriteCond %{THE_REQUEST} \s+/(ro|en|ru)\.html\s [NC]
+RewriteRule ^ /%1 [R=301,L]
