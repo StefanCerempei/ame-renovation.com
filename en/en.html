@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <title>AME Renovation | Tailored Interior Renovation</title>
+    <meta name="description" content="AME Renovation — Turnkey renovation works. Demolition, finishing, electrical, plumbing. Free quote. Serving the French Riviera and all of France.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    
+    <link rel="icon" type="image/png" href="../images/logo.png">
+
+    <!-- SEO / hreflang (kept for multilingual site structure) -->
+    <link rel="canonical" href="https://ame-renovation.com/">
+    <link rel="canonical" href="https://ame-renovation.com/ro">
+    <link rel="canonical" href="https://ame-renovation.com/en">
+    <link rel="canonical" href="https://ame-renovation.com/ru">
+
+    <link rel="alternate" hreflang="fr" href="https://ame-renovation.com/">
+    <link rel="alternate" hreflang="ro" href="https://ame-renovation.com/ro">
+    <link rel="alternate" hreflang="en" href="https://ame-renovation.com/en">
+    <link rel="alternate" hreflang="ru" href="https://ame-renovation.com/ru">
+    <link rel="alternate" hreflang="x-default" href="https://ame-renovation.com/">
+</head>
+<body>
+<nav class="navbar" id="navbar">
+    <a href="#" class="logo"><img src="../images/AME-renovation.com-removebg-preview.png" width="70px" height="70px" alt="logo"></a>
+    <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#calculator">Estimator</a></li>
+        <li><a href="#map-section">Regions</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="lang-switch">
+        <a href="../fr/index.html"><button class="lang-btn" data-lang="fr">FR</button></a>
+        <a href="en.html"><button class="lang-btn active" data-lang="en">EN</button></a>
+        <a href="../ro/ro.html"><button class="lang-btn" data-lang="ro">RO</button></a>
+        <a href="../ru/ru.html"><button class="lang-btn" data-lang="ru">RU</button></a>
+    </div>
+    <div class="burger" id="burgerBtn">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <span class="close-menu" id="closeMenu">✕</span>
+    <a href="#services">Services</a>
+    <a href="#calculator">Estimator</a>
+    <a href="#map-section">Regions</a>
+    <a href="#contact">Contact</a>
+
+    <div class="mobile-lang-switch">
+        <a href="../fr/index.html"><button class="lang-btn" data-lang="fr">FR</button></a>
+        <a href="en.html"><button class="lang-btn active" data-lang="en">EN</button></a>
+        <a href="../ro/ro.html"><button class="lang-btn" data-lang="ro">RO</button></a>
+        <a href="../ru/ru.html"><button class="lang-btn" data-lang="ru">RU</button></a>
+    </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<section class="hero">
+    <div class="hero-bg-texture"></div>
+    <div class="hero-content">
+        <div class="hero-badge">RENOVATION EXPERTS SINCE 2015</div>
+        <h1><span>Transform your spaces,</span> <span class="accent">preserve the essence</span></h1>
+        <p class="hero-desc">From demolition to high-end finishes — AME Renovation masters every step. Multilingual team, ten-year warranty, transparent quotes.</p>
+        <div class="btn-group">
+            <a href="#calculator" class="btn btn-primary">Estimate my project</a>
+            <a href="#contact" class="btn btn-outline">Free Quote</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Projects</div></div>
+            <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">Regions</div></div>
+            <div class="stat-item"><div class="stat-number">10 yrs</div><div class="stat-label">Warranty</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <div class="container">
+        <div class="eyebrow">OUR EXPERTISE</div>
+        <h2 class="section-title">A comprehensive range of works</h2>
+        <p class="section-subtitle">Demolition, finishing, electrical, plumbing — a single point of contact for stress-free renovation.</p>
+        <div class="services-grid" id="servicesGrid"></div>
+    </div>
+</section>
+
+<section id="calculator">
+    <div class="container">
+        <div class="eyebrow">INSTANT ESTIMATE</div>
+        <h2 class="section-title">Budget simulator</h2>
+        <p class="section-subtitle">Get a first estimate for your project in seconds.</p>
+        <div class="calculator-wrapper">
+            <div class="calc-grid">
+                <div>
+                    <div class="calc-field">
+                        <label>Type of work</label>
+                        <select id="workTypeSelect">
+                            <option value="demolition">Structural demolition</option>
+                            <option value="finition">Painting / Finishing</option>
+                            <option value="electricite">Electrical</option>
+                            <option value="plomberie">Plumbing</option>
+                            <option value="parquet">Flooring / Tiling</option>
+                            <option value="complet">Full renovation</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label>Surface area (sq m)</label>
+                        <input type="range" id="surfaceRange" value="60" min="10" max="300" step="5">
+                        <div class="range-value"><span id="surfaceValue">60 m²</span></div>
+                    </div>
+                    <div class="calc-field">
+                        <label>Material grade</label>
+                        <select id="qualitySelect">
+                            <option value="0.85">Economy</option>
+                            <option value="1" selected>Standard</option>
+                            <option value="1.5">Premium</option>
+                            <option value="2.2">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="calc-field">
+                        <label>Region</label>
+                        <select id="regionSelectCalc">
+                            <option value="1.3">Paris / Île-de-France</option>
+                            <option value="1.2">Nice / Cannes</option>
+                            <option value="1.15">Saint-Tropez / Monaco</option>
+                            <option value="1.1">Marseille / Toulon</option>
+                            <option value="1.05">Montpellier / Lyon</option>
+                            <option value="1">Other regions</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="price-result">
+                    <div class="price-label">TOTAL COST ESTIMATE</div>
+                    <div class="price-amount" id="totalPrice">0 €</div>
+                    <div class="price-breakdown" id="priceBreakdown"></div>
+                    <a href="#contact" class="btn btn-primary" style="margin-top:1rem;display:inline-block;">Request an accurate quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="map-section">
+    <div class="container">
+        <div class="eyebrow">WHERE TO FIND US</div>
+        <h2 class="section-title">Areas of intervention</h2>
+        <p class="section-subtitle">We operate throughout the French Riviera, Provence, and major French metropolitan areas.</p>
+        <div class="map-container"><div id="interactiveMap"></div></div>
+        <div class="region-list" id="regionList"></div>
+    </div>
+</section>
+
+<section id="process">
+    <div class="container">
+        <div class="eyebrow">OUR METHODOLOGY</div>
+        <h2 class="section-title">How we work</h2>
+        <div class="process-steps" id="processSteps">
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="eyebrow">READY TO START?</div>
+        <h2 class="section-title">Contact us</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <div class="contact-text"><strong>Phone</strong><span>+33 4 93 45 67 89</span></div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="contact-text"><strong>Email</strong><span>contact@ame-renovation.fr</span></div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text"><strong>Zones</strong><span>French Riviera, Provence, all of France</span></div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <div class="form-success" id="formSuccess">✓ Message sent successfully!</div>
+                <form id="contactForm">
+                    <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                        <div class="form-group"><input type="text" placeholder="First name" id="firstName" required></div>
+                        <div class="form-group"><input type="text" placeholder="Last name" id="lastName" required></div>
+                    </div>
+                    <div class="form-group"><input type="email" placeholder="Email" id="email" required></div>
+                    <div class="form-group">
+                        <select id="projectType">
+                            <option>Full renovation</option>
+                            <option>Painting work</option>
+                            <option>Electrical</option>
+                            <option>Plumbing</option>
+                            <option>Flooring / Tiling</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><textarea placeholder="Describe your project..." id="message"></textarea></div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Send my request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">AME<span>RÉNO</span></div>
+                <p class="footer-tagline">Excellence in renovation, from the French Riviera to the heart of Paris. We realize your vision with a certified ten-year warranty.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navigation</h4>
+                <ul class="footer-nav">
+                    <li><a href="#services">Our Services</a></li>
+                    <li><a href="#calculator">Price Estimator</a></li>
+                    <li><a href="#map-section">Coverage Areas</a></li>
+                    <li><a href="#contact">Contact us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul class="footer-nav">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Legal Notice</a></li>
+                    <li><a href="#">Ten-Year Liability Insurance</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col newsletter-col">
+                <h4>Newsletter</h4>
+                <p>Receive our renovation tips and latest projects.</p>
+                <form class="footer-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn-send" aria-label="Subscribe">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 AME Renovation. All rights reserved.</p>
+            <div class="designer-credit">Designed by <span>CreativeStudio</span></div>
+        </div>
+    </div>
+</footer>
+<button class="scroll-top" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // =========================
+    // DATA (translated)
+    // =========================
+    const servicesData = [
+        { title: "Demolition", desc: "Selective demolition, partition removal, and clean debris evacuation.", feature: "Fast turnaround", image: "images/1.jpg" },
+        { title: "Painting & Finishing", desc: "Surface preparation, plastering, quality painting, and wall coverings.", feature: "Meticulous finish", image: "images/6.JPG" },
+        { title: "Electrical", desc: "Code upgrades, electrical panel installation, and home automation.", feature: "NF C15-100 certified", image: "images/3.jpg" },
+        { title: "Plumbing", desc: "Bathroom renovation, sanitary fittings, and water heater installation.", feature: "Ten-year warranty", image: "images/22.jpg" },
+        { title: "Flooring & Tiling", desc: "Solid wood, laminate flooring or large-format tile with precision grouting.", feature: "Flooring expertise", image: "images/4.JPG" },
+        { title: "Turnkey Renovation", desc: "End-to-end project management: coordination of trades and rigorous monitoring.", feature: "Single point of contact", image: "images/5.JPG" }
+    ];
+
+    const processData = [
+        { title: "Contact & Study", desc: "Analysis of your needs and appointment within 24 hours." },
+        { title: "Site Visit & Quote", desc: "Free site visit, accurate measurements, and detailed commercial proposal." },
+        { title: "Construction", desc: "Implementation, site cleanliness, and regular progress reports." },
+        { title: "Delivery", desc: "Work acceptance and activation of legal guarantees." }
+    ];
+
+    // =========================
+    // RENDER SERVICES
+    // =========================
+    function renderServices() {
+        const grid = document.getElementById('servicesGrid');
+        if (!grid) return;
+
+        grid.innerHTML = servicesData.map(s => `
+            <div class="service-card">
+                <div class="service-img-container">
+                    <img src="${s.image}" alt="${s.title}" class="service-img">
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">${s.title}</h3>
+                    <p class="service-desc">${s.desc}</p>
+                    <div class="service-feature">✨ ${s.feature}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // =========================
+    // RENDER PROCESS
+    // =========================
+    function renderProcess() {
+        const stepsDiv = document.getElementById('processSteps');
+        if (!stepsDiv) return;
+
+        stepsDiv.innerHTML = processData.map((step, i) => `
+            <div class="step">
+                <div class="step-number">${i + 1}</div>
+                <div class="step-title" style="font-weight:700; margin-bottom:0.5rem;">${step.title}</div>
+                <div class="step-desc" style="color:var(--sand-dark); font-size:0.85rem;">${step.desc}</div>
+            </div>
+        `).join('');
+    }
+
+    // =========================
+    // CALCULATOR
+    // =========================
+    const basePrices = { demolition:45, finition:35, electricite:60, plomberie:65, parquet:48, complet:115 };
+
+    function calculatePrice() {
+        const type = document.getElementById('workTypeSelect')?.value;
+        const surface = parseInt(document.getElementById('surfaceRange')?.value || 60);
+        const quality = parseFloat(document.getElementById('qualitySelect')?.value || 1);
+        const region = parseFloat(document.getElementById('regionSelectCalc')?.value || 1);
+
+        const base = basePrices[type] || 50;
+        const total = Math.round(base * surface * quality * region);
+
+        document.getElementById('totalPrice').innerHTML = total.toLocaleString('fr-FR') + ' €';
+        document.getElementById('surfaceValue').innerHTML = surface + ' m²';
+
+        const breakdown = document.getElementById('priceBreakdown');
+        if (breakdown) {
+            breakdown.innerHTML = `
+                <div style="display:flex; justify-content:space-between;">
+                    <span>Labor</span>
+                    <span>${Math.round(total * 0.55).toLocaleString('fr-FR')} €</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:0.3rem;">
+                    <span>Estimated materials</span>
+                    <span>${Math.round(total * 0.45).toLocaleString('fr-FR')} €</span>
+                </div>
+            `;
+        }
+    }
+
+    // =========================
+    // MAP
+    // =========================
+    let map;
+    const cities = [
+        {name:"Paris",lat:48.8566,lng:2.3522},
+        {name:"Lyon",lat:45.7640,lng:4.8357},
+        {name:"Marseille",lat:43.2965,lng:5.3698},
+        {name:"Nice",lat:43.7102,lng:7.2620},
+        {name:"Cannes",lat:43.5528,lng:7.0174},
+        {name:"Saint-Tropez",lat:43.2696,lng:6.6398},
+        {name:"Toulon",lat:43.1242,lng:5.9280},
+        {name:"Montpellier",lat:43.6108,lng:3.8767},
+        {name:"Monaco",lat:43.7384,lng:7.4246}
+    ];
+
+    function initMap() {
+        if (!document.getElementById('interactiveMap')) return;
+
+        map = L.map('interactiveMap').setView([44.5,5.8],6);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+            attribution:'&copy; OpenStreetMap'
+        }).addTo(map);
+
+        cities.forEach(city => {
+            L.marker([city.lat, city.lng], {
+                icon: L.divIcon({
+                    html:'<div style="background:#f97316;width:12px;height:12px;border-radius:50%;box-shadow:0 0 8px #f97316;"></div>',
+                    iconSize:[12,12]
+                })
+            }).addTo(map).bindPopup(`<b>${city.name}</b><br>AME Renovation`);
+        });
+
+        const regionDiv = document.getElementById('regionList');
+        if (regionDiv) {
+            regionDiv.innerHTML = cities.map(c =>
+                `<div class="region-chip" onclick="flyToCity(${c.lat},${c.lng})">${c.name}</div>`
+            ).join('');
+        }
+    }
+
+    window.flyToCity = (lat, lng) => {
+        if (map) map.flyTo([lat, lng], 11, { duration: 1.2 });
+    };
+
+    // =========================
+    // LIGHTBOX
+    // =========================
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('service-img')) {
+            lightbox.classList.add('active');
+            lightboxImg.src = e.target.src;
+        }
+    });
+
+    lightboxClose?.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+    });
+
+    lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            lightbox.classList.remove('active');
+        }
+    });
+
+    // =========================
+    // EVENT LISTENERS
+    // =========================
+    renderServices();
+    renderProcess();
+    initMap();
+    calculatePrice();
+
+    document.getElementById('surfaceRange')?.addEventListener('input', calculatePrice);
+    document.getElementById('workTypeSelect')?.addEventListener('change', calculatePrice);
+    document.getElementById('qualitySelect')?.addEventListener('change', calculatePrice);
+    document.getElementById('regionSelectCalc')?.addEventListener('change', calculatePrice);
+
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        document.getElementById('formSuccess').style.display = 'block';
+        setTimeout(() => document.getElementById('formSuccess').style.display = 'none', 3000);
+        e.target.reset();
+    });
+
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 50);
+        document.getElementById('scrollTopBtn')?.classList.toggle('visible', window.scrollY > 300);
+    });
+
+    document.getElementById('scrollTopBtn')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('burgerBtn')?.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.toggle('open');
+        document.getElementById('mobileOverlay').classList.toggle('open');
+    });
+
+    document.getElementById('closeMenu')?.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.remove('open');
+        document.getElementById('mobileOverlay').classList.remove('open');
+    });
+
+    document.getElementById('mobileOverlay')?.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.remove('open');
+        document.getElementById('mobileOverlay').classList.remove('open');
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('mobileOverlay').classList.remove('open');
+        });
+    });
+
+});
+</script>
+<a href="https://wa.me/33604051703" 
+   class="whatsapp-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+<div class="image-lightbox" id="imageLightbox">
+    <span class="lightbox-close" id="lightboxClose">✕</span>
+    <img id="lightboxImg" src="" alt="">
+</div>
+</body>
+</html>
